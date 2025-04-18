@@ -10,35 +10,26 @@ function App() {
 
   return (
     <>
-      <h1 className="text-3xl p-4 text-center">
-        Memory Assignation Algorithms
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-6 mt-6">
+        Algoritmos de Asignación de Memoria
       </h1>
-      <div className="flex flex-row justify-center items-center p-4">
-        <button className="text-2xl p-4" onClick={() => setAlgorithm("OPTIMO")}>
-          ÓPTIMO
-        </button>
-        <button className="text-2xl p-4" onClick={() => setAlgorithm("FIFO")}>
-          FIFO
-        </button>
-        <button className="text-2xl p-4" onClick={() => setAlgorithm("LRU")}>
-          LRU
-        </button>
-        <button className="text-2xl p-4" onClick={() => setAlgorithm("FIFO+")}>
-          FIFO +
-        </button>
-        <button className="text-2xl p-4" onClick={() => setAlgorithm("CLOCK")}>
-          CLOCK
-        </button>
-        <button
-          className="text-2xl p-4"
-          onClick={() => setAlgorithm("SECOND CHANCE")}
-        >
-          SECOND CHANCE
-        </button>
+
+      <div className="flex flex-wrap justify-center gap-4 p-4">
+        {["OPTIMO", "FIFO", "LRU", "FIFO+", "CLOCK", "SECOND CHANCE"].map(
+          (algo) => (
+            <button
+              key={algo}
+              onClick={() => setAlgorithm(algo)}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-xl font-semibold py-3 px-6 rounded-2xl shadow-md transition-all duration-200"
+            >
+              {algo}
+            </button>
+          ),
+        )}
       </div>
 
       {algorithm && (
-        <div className="flex flex-row p-4">
+        <div className="flex flex-row justify-center p-4">
           <div className="flex flex-col justify-center bg-gray-100 p-4">
             <form
               onSubmit={(e) => {

@@ -1,23 +1,24 @@
 import React, { useMemo } from "react";
 
-export function FIFO_Table({ sequence, memorySize }) {
+export function LRU_Table({ sequence, memorySize }) {
   const { memoryStates, pageFaults } = useMemo(() => {
-    // Validación segura dentro del useMemo
     if (!sequence || sequence.length === 0 || memorySize <= 0) {
       return { memoryStates: [], pageFaults: 0 };
     }
 
-    const memory = Array(memorySize).fill(null); // memoria fija
-    const ages = Array(memorySize).fill(-1); // para controlar orden de llegada
+    const memory = Array(memorySize).fill(null);
+    const lastUsed = Array(memorySize).fill(-1); // para llevar control de uso
     const memoryStates = [];
     let faults = 0;
     let time = 0;
 
     for (let i = 0; i < sequence.length; i++) {
       const page = sequence[i];
+      const indexInMemory = memory.indexOf(page);
 
-      // Si ya está en memoria, no hay fallo
-      if (memory.includes(page)) {
+      if (indexInMemory !== -1) {
+        // Ya está en memoria → actualizar tiempo de uso
+        lastUsed[indexInMemory] = time;
         memoryStates.push([...memory]);
         time++;
         continue;
@@ -27,13 +28,14 @@ export function FIFO_Table({ sequence, memorySize }) {
       const emptyIndex = memory.indexOf(null);
 
       if (emptyIndex !== -1) {
+        // Espacio libre
         memory[emptyIndex] = page;
-        ages[emptyIndex] = time;
+        lastUsed[emptyIndex] = time;
       } else {
-        // Reemplazar el más antiguo (edad más baja)
-        const oldestIndex = ages.indexOf(Math.min(...ages));
-        memory[oldestIndex] = page;
-        ages[oldestIndex] = time;
+        // Buscar el menos recientemente usado (menor tiempo)
+        const lruIndex = lastUsed.indexOf(Math.min(...lastUsed));
+        memory[lruIndex] = page;
+        lastUsed[lruIndex] = time;
       }
 
       memoryStates.push([...memory]);
@@ -43,11 +45,10 @@ export function FIFO_Table({ sequence, memorySize }) {
     return { memoryStates, pageFaults: faults };
   }, [sequence, memorySize]);
 
-  // Validación fuera del hook: evita render sin datos válidos
   if (!sequence || sequence.length === 0 || memorySize <= 0) {
     return (
       <div className="p-6 text-center text-xl text-gray-500">
-        Ingresa una secuencia y tamaño de memoria válidos para simular FIFO.
+        Ingresa una secuencia y tamaño de memoria válidos para simular LRU.
       </div>
     );
   }
@@ -55,7 +56,7 @@ export function FIFO_Table({ sequence, memorySize }) {
   return (
     <div className="p-6 max-w-full overflow-x-auto">
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Asignación de Memoria - FIFO
+        Asignación de Memoria - LRU
       </h2>
       <table className="w-full border-collapse shadow-lg rounded-lg overflow-hidden text-lg">
         <thead>

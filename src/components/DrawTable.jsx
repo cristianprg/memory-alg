@@ -1,4 +1,6 @@
 import { FIFO_Table } from "./tables/FIFO_Table";
+import { LRU_Table } from "./tables/LRU_Table";
+import { OptimalTable } from "./tables/OptimalTable";
 
 export function DrawTable({ algorithm, sequence, flag, memorySize }) {
   if (!flag) return null;
@@ -13,9 +15,9 @@ export function DrawTable({ algorithm, sequence, flag, memorySize }) {
     case "SECOND CHANCE":
       return <div>SECOND CHANCE</div>;
     case "LRU":
-      return <div>LRU</div>;
+      return <LRU_Table sequence={sequence} memorySize={memorySize} />;
     case "OPTIMO":
-      return <div>OPTIMO</div>;
+      return <OptimalTable sequence={sequence} memorySize={memorySize} />;
     default:
       return null;
   }

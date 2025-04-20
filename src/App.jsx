@@ -35,7 +35,7 @@ function App() {
               onSubmit={(e) => {
                 e.preventDefault();
                 const input = e.target.elements.sequenceInput.value;
-                const marcosInput = e.target.elements.marcosInput.value;
+                const marcosInput = e.target.elements.marcosInput.value || 0;
                 setSequence(
                   input.split(",").map((num) => parseInt(num.trim(), 10)),
                 );
@@ -64,6 +64,7 @@ function App() {
                   id="marcosInput"
                   name="marcosInput"
                   placeholder="1, 2, 3..."
+                  defaultValue={0}
                 />
               </div>
               <button

@@ -30,7 +30,7 @@ function App() {
 
       {algorithm && (
         <div className="flex flex-row justify-center p-4">
-          <div className="flex flex-col justify-center bg-gray-100 p-4">
+          <div className="flex flex-col justify-center bg-gray-100 p-6 rounded-lg shadow-lg">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -41,25 +41,32 @@ function App() {
                 );
                 setMarcos(parseInt(marcosInput));
               }}
+              className="space-y-6"
             >
-              <div className="mb-4">
-                <label className="text-xl p-4" htmlFor="sequenceInput">
-                  Enter sequence (comma-separated):
+              <div>
+                <label
+                  className="block text-lg font-medium text-gray-700 mb-2"
+                  htmlFor="sequenceInput"
+                >
+                  Enter sequence:
                 </label>
                 <input
-                  className="border p-2 text-xl"
+                  className="w-full border border-gray-300 rounded-lg p-3 text-lg focus:ring-blue-500 focus:border-blue-500"
                   type="text"
                   id="sequenceInput"
                   name="sequenceInput"
                   placeholder="e.g., 1, 2, 3, 4"
                 />
               </div>
-              <div className="mb-4">
-                <label className="text-xl p-4" htmlFor="marcosInput">
+              <div>
+                <label
+                  className="block text-lg font-medium text-gray-700 mb-2"
+                  htmlFor="marcosInput"
+                >
                   Enter memory size:
                 </label>
                 <input
-                  className="border p-2 text-xl"
+                  className="w-full border border-gray-300 rounded-lg p-3 text-lg focus:ring-blue-500 focus:border-blue-500"
                   type="number"
                   id="marcosInput"
                   name="marcosInput"
@@ -68,7 +75,7 @@ function App() {
                 />
               </div>
               <button
-                className="text-xl p-2 ml-2 bg-blue-500 text-white"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 rounded-lg shadow-md transition-all duration-200"
                 type="submit"
               >
                 Submit
